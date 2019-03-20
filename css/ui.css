@@ -1,8 +1,8 @@
 /*
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:44
-* @Last Modified by:   Beibei
-* @Last Modified time: 2019-03-20 21:30:42
+* @Last Modified by:   sakurabei
+* @Last Modified time: 2019-03-20 22:24:27
 */
 /* 搜索 */
 .ui-search{
@@ -177,7 +177,7 @@
 .ui-backTop:hover:after{
 	content:'回到顶部';
 	display:block;
-	line-height:20px;
+	line-height:20px;s
 	text-align:center;
 
 }
