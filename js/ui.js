@@ -1,8 +1,8 @@
 /*
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:06
-* @Last Modified by:   Beibei
-* @Last Modified time: 2019-03-19 22:38:56
+* @Last Modified by:   sakurabei
+* @Last Modified time: 2019-03-20 23:26:30
 */
 
 'use strict';
@@ -78,6 +78,8 @@ $.fn.UiBackTop = function(){
 // 进度点再点击的时候，需要切换到对应的界面
 // 没有（进度点点击的时候，翻页操作的时候）需要自动滚动
 // 滚动过程中，屏蔽其他操作，包括自动滚动，左右翻页进度点点击
+// 
+// 留了一个无缝滚动的疑问
 $.fn.UiSlider = function(){
 	var ui =$(this);
 	var wrap = $('.ui-slider-wrap'); 
@@ -90,18 +92,45 @@ $.fn.UiSlider = function(){
 	var current = 0;
 	var size = items.size();
 	var width = items.eq(0).width();
+	var enableAuto = true;
 
+	// 设置自动滚动感应，如果鼠标在wrap中，不要自动滚动
+	wrap.on('mouseover',function(){
+		enableAuto = false;
+	})
+	wrap.on('mouseout',function(){
+		enableAuto = true;
+	})
+	
 	// 具体操作
 	wrap
 	.on('move_prev',function(){
-
+		if(current<=0){
+			current = size;
+		}
+		current = current -1;
+		wrap.triggerHandler('move_to',current);
 	})
 	.on('move_next',function(){
+		if(current>=size-1){
+			current = -1;
+		}
+		current = current+1;
+		wrap.triggerHandler('move_to',current);
 
 	})
 	.on('move_to',function(evt,index){
-		wrap.css('left',index*width*-1)
-	});
+		wrap.css('left',index*width*-1);
+		tips.removeClass('item_focus').eq(index).addClass('item_focus');
+	})
+	.on('auto_move',function(){
+		setInterval(function(){
+			enableAuto && wrap.triggerHandler('move_next');
+
+		},2000);
+
+	})
+	.triggerHandler('auto_move');
 	// 事件操作
 	btn_prev.on('click',function(){
 		wrap.triggerHandler('move_prev');
