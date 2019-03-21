@@ -2,7 +2,7 @@
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:06
 * @Last Modified by:   sakurabei
-* @Last Modified time: 2019-03-20 23:26:30
+* @Last Modified time: 2019-03-21 23:23:38
 */
 
 'use strict';
@@ -59,12 +59,12 @@ $.fn.UiBackTop = function(){
 		// console.log(top);
 		if(top+11 == windowHeight){
 			el.show();
-			console.log("展示");
+			// console.log("展示");
 		}else{
 			el.hide();
-			console.log("消失");
-			console.log(top);
-			console.log(windowHeight);
+			// console.log("消失");
+			// console.log(top);
+			// console.log(windowHeight);
 		}
 	});
 	el.on('click',function(){
@@ -145,7 +145,54 @@ $.fn.UiSlider = function(){
 		wrap.triggerHandler('move_to',index);
 	})
 }
+// ui-cascading
+$.fn.UiCascading = function(){
+	var ui =$(this);
+	var selects = $('select',ui);
 
+	selects
+	.on('change',function(){
+		var val = $(this).val();
+		var index = selects.index(this);
+
+		// debugger
+		// 触发下一个select的更新，根据当前的值
+		var where = $(this).attr('data-where');
+		where = where ? where.split(','):[];
+		where.push($(this).val());
+		selects.eq(index+1)
+			.attr('data-where',where.join(','))
+			.triggerHandler('reloadOptions');
+		// 触发下一个之后的select的初始化（清除不该有的数据项）
+		ui.find('select:gt('+(index+1)+')').each(function(){
+			$(this)
+			.attr('data-where','')
+			.triggerHandler('reloadOptions');
+		})
+			
+
+	})
+	.on('reloadOptions',function(){
+		var method = $(this).attr('data-search');
+		var args = $(this).attr('data-where').split(',');
+		
+		var data = AjaxRemoteGetData[method].apply(this,args);
+
+		var select =$(this);
+		select.find('option').remove();
+
+		$.each(data,function(i,item){
+			 var el = $('<option value = "'+item+'">'+ item +'</option>');
+			select.append(el);
+			 
+		})
+		// debugger
+
+	});
+
+	selects.eq(0).triggerHandler('reloadOptions');
+
+}
 // 页面的脚本逻辑
 $(function(){
 	$('.ui-search').UiSearch();
@@ -153,6 +200,7 @@ $(function(){
 	$('.content-tab .block .item').UiTab('.block-caption > a','.block-content >.block-wrap',"block-caption-");
 	$('body').UiBackTop();
 	$('.ui-slider').UiSlider();
+	$('.ui-cascading').UiCascading();
 });
 
 

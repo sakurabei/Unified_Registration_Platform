@@ -2,7 +2,7 @@
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:44
 * @Last Modified by:   sakurabei
-* @Last Modified time: 2019-03-20 22:24:27
+* @Last Modified time: 2019-03-21 21:32:25
 */
 /* 搜索 */
 .ui-search{
@@ -231,16 +231,20 @@
 	height:12px;
 	text-align:center;
 	position:absolute;
+	/* 感觉left:0;可有可无 */
 	left:0;
 	bottom:20px;
+	/* background-color:red; */
 }
 .ui-slider-process .item{
 	display:inline-block;
 	width:16px;
 	height:16px;
+	/* background-color:blue; */
 	background:url(../img/ui-slider-process.png) no-repeat;
 }
 .ui-slider-process .item_focus,
 .ui-slider-process .item:hover{
 	background-position:-23px 0;
 } 
+/* 多级联动菜单组件 */

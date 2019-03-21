@@ -227,11 +227,29 @@
     			<div class="caption">
     				<span class="text">快速预约</span>
     			</div>
-    			<div class="form">
-    				<div class="line"><select name="area"><option>医院地区</option></select></div>
-    				<div class="line"><select name="level"><option>医院等级</option></select></div>
-    				<div class="line"><select name="name"><option>医院名称</option></select></div>
-    				<div class="line"><select name="department"><option>医院科室</option></select></div>
+    			<div class="form ui-cascading">
+    				<div class="line">
+                        <!-- data-search  数据来源名称  data-where 传入参数-->
+                        <select name="area" data-search="getDistinctArea" data-where="">
+                            <option>医院地区</option>
+                        </select>
+                    </div>
+    				<div class="line">
+                        <select name="level" data-search="getLeveByArea" data-where="">
+                            <option>医院等级</option>
+                             <option>医院等级2</option>
+                        </select>
+                    </div>
+    				<div class="line">
+                        <select name="name" data-search="getNameByAreaAndLevel" data-where="">
+                            <option>医院名称</option>
+                        </select>
+                    </div>
+    				<div class="line">
+                        <select name="department" data-search="getDepartmentArrByHospitalName" data-where="">
+                            <option>医院科室</option>
+                        </select>
+                    </div>
     			</div>
     			<div class="submit">
     				<input type="button" class="button" value="快速查询">
@@ -376,5 +394,6 @@
     		Copyright © 2017慕课网版权所有
     	</div>
     	<script type="text/javascript" src="js/ui.js"></script>
+        <script type="text/javascript" src="js/data.js"></script>
     </body>
 </html>
