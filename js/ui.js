@@ -2,7 +2,7 @@
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:06
 * @Last Modified by:   sakurabei
-* @Last Modified time: 2019-03-21 23:23:38
+* @Last Modified time: 2019-03-22 23:54:29
 */
 
 'use strict';
@@ -146,17 +146,26 @@ $.fn.UiSlider = function(){
 	})
 }
 // ui-cascading
+// 当前菜单变动时，会重置或者初始化当前菜单以下的所有内容，并且更新下一级菜单的内容
 $.fn.UiCascading = function(){
 	var ui =$(this);
+	// 这个$('select',ui);是指从ui 中选择select元素
 	var selects = $('select',ui);
-
+	// 当元素的值改变时，会触发change事件
 	selects
 	.on('change',function(){
+		// val（）获取值的文本域
+		// 获取当前值
 		var val = $(this).val();
+		// 获取位置
+		// 选中的是哪个下拉框
 		var index = selects.index(this);
 
 		// debugger
 		// 触发下一个select的更新，根据当前的值
+		//  attr（) 方法设置或返回被选元素的属性值
+		//  triggerHandler() 方法触发被选元素上指定的事件。
+		//  .on('reloadOptions',function() 下列数据更新
 		var where = $(this).attr('data-where');
 		where = where ? where.split(','):[];
 		where.push($(this).val());
@@ -164,6 +173,7 @@ $.fn.UiCascading = function(){
 			.attr('data-where',where.join(','))
 			.triggerHandler('reloadOptions');
 		// 触发下一个之后的select的初始化（清除不该有的数据项）
+		// 这一步不是很明白
 		ui.find('select:gt('+(index+1)+')').each(function(){
 			$(this)
 			.attr('data-where','')
