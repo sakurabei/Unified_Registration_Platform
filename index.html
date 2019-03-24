@@ -25,7 +25,7 @@
     	</div>
     	<div class="header" id="header">
     		<div class="wrap clearfix">
-    			<a class="logo" href="#"><img src="img/logo.png"></a>
+    			<a class="logo" href="index.html"><img src="img/logo.png"></a>
     			<div class="search ui-search">
     				<div class="ui-search-selected">医院</div>
     				<div class="ui-search-select-list">
@@ -196,7 +196,7 @@
                     </div>
                 </div>
             </div>
-    		<a href="#" class="link">按医院挂号</a>
+    		<a href="hospital.html" class="link">按医院挂号</a>
     		<a href="#" class="link">按科室挂号</a>
     		<a href="#" class="link">按疾病挂号</a>
     		<a href="#" class="link">最新公告</a>
@@ -231,6 +231,8 @@
     				<div class="line">
                         <!-- data-search  数据来源名称 远程某一接口的名称  data-where 传入参数-->
                         <!-- 可以通过jQuery的data("xxx")方法取HTML标签上的data-xxx属性的值  -->
+                        <!-- data-where 是上一级传过来的-->
+                        <!-- 根据区域地区获取医院等级，根据医院地区和等级获取医院名称 -->
                         <select name="area" data-search="getDistinctArea" data-where="">
                             <option>医院地区</option>
                         </select>
@@ -238,17 +240,22 @@
     				<div class="line">
                         <select name="level" data-search="getLeveByArea" data-where="">
                             <option>医院等级</option>
+                            <option>医院等级1</option>
                              <option>医院等级2</option>
                         </select>
                     </div>
     				<div class="line">
                         <select name="name" data-search="getNameByAreaAndLevel" data-where="">
                             <option>医院名称</option>
+                            <option>医院名称1</option>
+                            <option>医院名称2</option>
                         </select>
                     </div>
     				<div class="line">
                         <select name="department" data-search="getDepartmentArrByHospitalName" data-where="">
                             <option>医院科室</option>
+                            <option>医院名称1</option>
+                            <option>医院名称2</option>
                         </select>
                     </div>
     			</div>

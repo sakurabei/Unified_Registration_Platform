@@ -2,7 +2,7 @@
 * @Author: Beibei
 * @Date:   2019-02-27 22:55:06
 * @Last Modified by:   sakurabei
-* @Last Modified time: 2019-03-22 23:54:29
+* @Last Modified time: 2019-03-24 11:59:44
 */
 
 'use strict';
@@ -44,7 +44,7 @@ $.fn.UiTab = function(header,content,focus_prefix){
 
 
 }
-// 
+// 回到顶端
 
 $.fn.UiBackTop = function(){
 	var ui = $(this);
@@ -173,7 +173,9 @@ $.fn.UiCascading = function(){
 			.attr('data-where',where.join(','))
 			.triggerHandler('reloadOptions');
 		// 触发下一个之后的select的初始化（清除不该有的数据项）
-		// 这一步不是很明白
+		// 选中当前索引之后的所有值
+		// each() 方法规定为每个匹配元素规定运行的函数。
+		// 当传递医院地区医院等级时，两个参数都会传到getNameByAreaAndLevel(erea,level)中的erea 中
 		ui.find('select:gt('+(index+1)+')').each(function(){
 			$(this)
 			.attr('data-where','')
@@ -185,12 +187,12 @@ $.fn.UiCascading = function(){
 	.on('reloadOptions',function(){
 		var method = $(this).attr('data-search');
 		var args = $(this).attr('data-where').split(',');
-		
+		 
 		var data = AjaxRemoteGetData[method].apply(this,args);
 
-		var select =$(this);
+		var select =$(this); 
 		select.find('option').remove();
-
+		//从data.js中获取的数据。
 		$.each(data,function(i,item){
 			 var el = $('<option value = "'+item+'">'+ item +'</option>');
 			select.append(el);
